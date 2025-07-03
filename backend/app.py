@@ -186,27 +186,26 @@ def acuerdo_seguridad():
                 flash(f'Faltan campos requeridos: {", ".join(missing_fields)}', 'error')
                 return render_template('provider/forms/acuerdo_seguridad.html', form_data=form_data)
             
-            # Generar archivo de texto
-            filepath_txt = generate_acuerdo_seguridad_file(form_data)
-            
-            # Intentar generar archivo Word
-            filepath_word = None
+            # Generar archivo (intentar Word primero, si falla usar texto)
             try:
+                # Intentar generar Word si python-docx está disponible
                 from services.word_generator import generate_acuerdo_seguridad_word
-                filepath_word = generate_acuerdo_seguridad_word(form_data)
-            except ImportError:
-                print("Librería python-docx no disponible, generando solo archivo de texto")
-            except Exception as e:
-                print(f"Error generando Word: {e}")
-            
-            # Usar Word si está disponible, sino texto
-            filepath = filepath_word if filepath_word and os.path.exists(filepath_word) else filepath_txt
-            
-            if not filepath or not os.path.exists(filepath):
-                flash('Error al generar el documento', 'error')
-                return render_template('provider/forms/acuerdo_seguridad.html', form_data=form_data)
-            
-            filename = os.path.basename(filepath)
+                filepath = generate_acuerdo_seguridad_word(form_data)
+                
+                if filepath and os.path.exists(filepath):
+                    filename = os.path.basename(filepath)
+                else:
+                    raise Exception("Fallo generación Word")
+                    
+            except (ImportError, Exception):
+                # Si falla Word, usar generación de texto
+                filepath = generate_acuerdo_seguridad_file(form_data)
+                
+                if not filepath or not os.path.exists(filepath):
+                    flash('Error al generar el documento', 'error')
+                    return render_template('provider/forms/acuerdo_seguridad.html', form_data=form_data)
+                
+                filename = os.path.basename(filepath)
             
             # Guardar en "base de datos" de sesión
             if 'form_submissions' not in session:
@@ -258,27 +257,26 @@ def autorizacion_datos():
                 flash(f'Faltan campos requeridos: {", ".join(missing_fields)}', 'error')
                 return render_template('provider/forms/autorizacion_datos.html', form_data=form_data)
             
-            # Generar archivo de texto
-            filepath_txt = generate_autorizacion_datos_file(form_data)
-            
-            # Intentar generar archivo Word
-            filepath_word = None
+            # Generar archivo (intentar Word primero, si falla usar texto)
             try:
+                # Intentar generar Word si python-docx está disponible
                 from services.word_generator import generate_autorizacion_datos_word
-                filepath_word = generate_autorizacion_datos_word(form_data)
-            except ImportError:
-                print("Librería python-docx no disponible, generando solo archivo de texto")
-            except Exception as e:
-                print(f"Error generando Word: {e}")
-            
-            # Usar Word si está disponible, sino texto
-            filepath = filepath_word if filepath_word and os.path.exists(filepath_word) else filepath_txt
-            
-            if not filepath or not os.path.exists(filepath):
-                flash('Error al generar el documento', 'error')
-                return render_template('provider/forms/autorizacion_datos.html', form_data=form_data)
-            
-            filename = os.path.basename(filepath)
+                filepath = generate_autorizacion_datos_word(form_data)
+                
+                if filepath and os.path.exists(filepath):
+                    filename = os.path.basename(filepath)
+                else:
+                    raise Exception("Fallo generación Word")
+                    
+            except (ImportError, Exception):
+                # Si falla Word, usar generación de texto
+                filepath = generate_autorizacion_datos_file(form_data)
+                
+                if not filepath or not os.path.exists(filepath):
+                    flash('Error al generar el documento', 'error')
+                    return render_template('provider/forms/autorizacion_datos.html', form_data=form_data)
+                
+                filename = os.path.basename(filepath)
             
             # Guardar en sesión
             if 'form_submissions' not in session:
