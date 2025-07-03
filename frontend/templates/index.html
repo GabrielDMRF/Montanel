@@ -1,0 +1,270 @@
+<!-- frontend/templates/index.html -->
+{% extends "base.html" %}
+
+{% block title %}Inicio - Sistema Montanel{% endblock %}
+
+{% block content %}
+<style>
+    .hero-section {
+        text-align: center;
+        margin-bottom: 48px;
+    }
+    .hero-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #1f2937;
+        margin-bottom: 16px;
+    }
+    .hero-subtitle {
+        font-size: 1.5rem;
+        color: #059669;
+        margin-bottom: 24px;
+    }
+    .hero-description {
+        font-size: 1.125rem;
+        color: #6b7280;
+        max-width: 42rem;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+    .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 3rem;
+        margin-bottom: 48px;
+        max-width: 48rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .access-card {
+        background: white;
+        border-radius: 8px;
+        padding: 24px;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e5e7eb;
+        text-align: center;
+        transition: box-shadow 0.3s ease;
+    }
+    .access-card:hover {
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    .card-icon {
+        font-size: 2.5rem;
+        margin-bottom: 16px;
+    }
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: #1f2937;
+        margin-bottom: 8px;
+    }
+    .card-description {
+        color: #6b7280;
+        margin-bottom: 16px;
+        line-height: 1.5;
+    }
+    .btn {
+        display: inline-block;
+        padding: 8px 16px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.2s ease;
+        border: none;
+        cursor: pointer;
+    }
+    .btn-blue {
+        background-color: #3b82f6;
+        color: white;
+    }
+    .btn-blue:hover {
+        background-color: #2563eb;
+    }
+    .btn-green {
+        background-color: #10b981;
+        color: white;
+    }
+    .btn-green:hover {
+        background-color: #059669;
+    }
+    .btn-gray {
+        background-color: #6b7280;
+        color: white;
+    }
+    .btn-gray:hover {
+        background-color: #4b5563;
+    }
+    .features-section {
+        background: white;
+        border-radius: 8px;
+        padding: 32px;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e5e7eb;
+        margin-bottom: 32px;
+    }
+    .features-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #1f2937;
+        text-align: center;
+        margin-bottom: 24px;
+    }
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 24px;
+    }
+    .feature-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    .feature-icon {
+        font-size: 1.25rem;
+        color: #10b981;
+        margin-top: 4px;
+    }
+    .feature-title {
+        font-weight: bold;
+        color: #1f2937;
+        margin-bottom: 4px;
+    }
+    .feature-description {
+        color: #6b7280;
+        line-height: 1.5;
+    }
+    .contact-section {
+        background-color: #ecfdf5;
+        border: 1px solid #a7f3d0;
+        border-radius: 8px;
+        padding: 24px;
+        text-align: center;
+        margin-top: 48px;
+    }
+    .contact-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: #065f46;
+        margin-bottom: 8px;
+    }
+    .contact-description {
+        color: #047857;
+        margin-bottom: 16px;
+    }
+    .contact-links {
+        display: flex;
+        justify-content: center;
+        gap: 24px;
+        flex-wrap: wrap;
+    }
+    .contact-link {
+        color: #059669;
+        text-decoration: none;
+    }
+    .contact-link:hover {
+        color: #047857;
+    }
+</style>
+
+<div style="max-width: 64rem; margin: 0 auto;">
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <h1 class="hero-title">
+            🌱 Sistema de Gestión Documental
+        </h1>
+        <h2 class="hero-subtitle">
+            Inversiones Montanel SAS
+        </h2>
+        <p class="hero-description">
+            Plataforma integral para la gestión de documentos de clientes y proveedores. 
+            Simplifica tus procesos administrativos con formularios dinámicos y validación automática.
+        </p>
+    </div>
+
+    <!-- Tarjetas de Acceso -->
+    <div class="cards-grid">
+        <!-- Clientes -->
+        <div class="access-card">
+            <div class="card-icon">👥</div>
+            <h3 class="card-title">Clientes</h3>
+            <p class="card-description">
+                Gestiona contratos, autorizaciones y documentación comercial
+            </p>
+            <a href="{{ url_for('login') }}" class="btn btn-blue">
+                Iniciar Sesión
+            </a>
+        </div>
+
+        <!-- Proveedores -->
+        <div class="access-card">
+            <div class="card-icon">🤝</div>
+            <h3 class="card-title">Proveedores</h3>
+            <p class="card-description">
+                Postcosecha, insumos y servicios. Completa tu documentación fácilmente
+            </p>
+            <a href="{{ url_for('register') }}" class="btn btn-green">
+                Registrarse
+            </a>
+        </div>
+    </div>
+
+    <!-- Características -->
+    <div class="features-section">
+        <h3 class="features-title">
+            Características del Sistema
+        </h3>
+        
+        <div class="features-grid">
+            <div class="feature-item">
+                <i class="fas fa-file-alt feature-icon"></i>
+                <div>
+                    <h4 class="feature-title">Formularios Dinámicos</h4>
+                    <p class="feature-description">Completa formularios que generan automáticamente documentos oficiales</p>
+                </div>
+            </div>
+            
+            <div class="feature-item">
+                <i class="fas fa-shield-alt feature-icon"></i>
+                <div>
+                    <h4 class="feature-title">Validación Automática</h4>
+                    <p class="feature-description">Sistema que verifica la completitud de la documentación</p>
+                </div>
+            </div>
+            
+            <div class="feature-item">
+                <i class="fas fa-bell feature-icon"></i>
+                <div>
+                    <h4 class="feature-title">Notificaciones</h4>
+                    <p class="feature-description">Alertas automáticas para documentos faltantes o vencidos</p>
+                </div>
+            </div>
+            
+            <div class="feature-item">
+                <i class="fas fa-download feature-icon"></i>
+                <div>
+                    <h4 class="feature-title">Descarga Organizada</h4>
+                    <p class="feature-description">Descarga carpetas completas con toda la documentación</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Información de Contacto -->
+    <div class="contact-section">
+        <h3 class="contact-title">
+            ¿Necesitas ayuda?
+        </h3>
+        <p class="contact-description">
+            Contacta a nuestro equipo de soporte
+        </p>
+        <div class="contact-links">
+            <a href="mailto:info@montanel.com" class="contact-link">
+                <i class="fas fa-envelope"></i> info@montanel.com
+            </a>
+            <a href="tel:6951375" class="contact-link">
+                <i class="fas fa-phone"></i> 695-1375
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

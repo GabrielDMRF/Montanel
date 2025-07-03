@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: montanel-docs-system
+    env: python
+    buildCommand: |
+      pip install -r backend/requirements.txt
+      npm install
+      npm run build-css-prod
+    startCommand: cd backend && gunicorn --bind 0.0.0.0:$PORT app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: MONGODB_URI
+        fromDatabase:
+          name: montanel-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: JWT_SECRET_KEY
+        generateValue: true
+
+databases:
+  - name: montanel-db
+    databaseName: montanel_docs
+    user: montanel_user

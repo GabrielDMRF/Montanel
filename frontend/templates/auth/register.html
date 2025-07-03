@@ -1,0 +1,237 @@
+<!-- frontend/templates/auth/register.html -->
+{% extends "base.html" %}
+
+{% block title %}Registro - Sistema Montanel{% endblock %}
+
+{% block content %}
+<style>
+    .register-container {
+        max-width: 36rem;
+        margin: 2rem auto;
+    }
+    .register-card {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        border: 1px solid #e5e7eb;
+    }
+    .register-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    .register-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #1f2937;
+        margin-bottom: 0.5rem;
+    }
+    .register-subtitle {
+        color: #6b7280;
+    }
+    .form-section {
+        margin-bottom: 1.5rem;
+    }
+    .section-title {
+        font-size: 1.125rem;
+        font-weight: 500;
+        color: #374151;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #e5e7eb;
+    }
+    .form-group {
+        margin-bottom: 1.25rem;
+    }
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+    .form-label {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #374151;
+        margin-bottom: 0.25rem;
+    }
+    .form-input, .form-select {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        box-sizing: border-box;
+    }
+    .form-input:focus, .form-select:focus {
+        outline: none;
+        border-color: #10b981;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    }
+    .register-button {
+        width: 100%;
+        background-color: #10b981;
+        color: white;
+        font-weight: bold;
+        padding: 0.875rem;
+        border: none;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+    .register-button:hover {
+        background-color: #059669;
+    }
+    .register-footer {
+        margin-top: 1.5rem;
+        text-align: center;
+    }
+    .register-footer p {
+        color: #6b7280;
+        margin: 0;
+    }
+    .register-footer a {
+        color: #10b981;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    .register-footer a:hover {
+        color: #047857;
+    }
+    .back-link {
+        text-align: center;
+        margin-top: 1.5rem;
+    }
+    .back-link a {
+        color: #10b981;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .back-link a:hover {
+        color: #047857;
+    }
+    @media (max-width: 640px) {
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+        .register-container {
+            margin: 1rem;
+        }
+        .register-card {
+            padding: 1.5rem;
+        }
+    }
+</style>
+
+<div class="register-container">
+    <div class="register-card">
+        <div class="register-header">
+            <h1 class="register-title">Crear Cuenta</h1>
+            <p class="register-subtitle">Regístrate en el sistema Montanel</p>
+        </div>
+
+        <form method="POST">
+            <!-- Tipo de Usuario -->
+            <div class="form-section">
+                <div class="form-group">
+                    <label for="role" class="form-label">Tipo de Usuario</label>
+                    <select id="role" name="role" required class="form-select">
+                        <option value="provider">Proveedor</option>
+                        <option value="client">Cliente</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Credenciales -->
+            <div class="form-section">
+                <h3 class="section-title">Credenciales de Acceso</h3>
+                
+                <div class="form-group">
+                    <label for="email" class="form-label">Correo Electrónico</label>
+                    <input type="email" 
+                           id="email" 
+                           name="email" 
+                           required 
+                           class="form-input"
+                           placeholder="correo@empresa.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" 
+                           id="password" 
+                           name="password" 
+                           required 
+                           minlength="6"
+                           class="form-input"
+                           placeholder="Mínimo 6 caracteres">
+                </div>
+            </div>
+
+            <!-- Información de la Empresa -->
+            <div class="form-section">
+                <h3 class="section-title">Información de la Empresa</h3>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="company_name" class="form-label">Razón Social</label>
+                        <input type="text" 
+                               id="company_name" 
+                               name="company_name" 
+                               required 
+                               class="form-input"
+                               placeholder="Nombre de la empresa">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nit" class="form-label">NIT</label>
+                        <input type="text" 
+                               id="nit" 
+                               name="nit" 
+                               required 
+                               class="form-input"
+                               placeholder="123456789-0">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="legal_representative" class="form-label">Representante Legal</label>
+                    <input type="text" 
+                           id="legal_representative" 
+                           name="legal_representative" 
+                           required 
+                           class="form-input"
+                           placeholder="Nombre completo del representante">
+                </div>
+            </div>
+
+            <button type="submit" class="register-button">
+                <i class="fas fa-user-plus"></i>
+                Crear Cuenta
+            </button>
+        </form>
+
+        <div class="register-footer">
+            <p>
+                ¿Ya tienes cuenta?
+                <a href="{{ url_for('login') }}">Inicia sesión aquí</a>
+            </p>
+        </div>
+    </div>
+
+    <div class="back-link">
+        <a href="{{ url_for('index') }}">
+            <i class="fas fa-arrow-left"></i>
+            Volver al inicio
+        </a>
+    </div>
+</div>
+{% endblock %}

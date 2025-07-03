@@ -1,0 +1,186 @@
+<!-- frontend/templates/auth/login.html -->
+{% extends "base.html" %}
+
+{% block title %}Iniciar Sesión - Sistema Montanel{% endblock %}
+
+{% block content %}
+<style>
+    .login-container {
+        max-width: 28rem;
+        margin: 2rem auto;
+    }
+    .login-card {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        border: 1px solid #e5e7eb;
+    }
+    .login-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    .login-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #1f2937;
+        margin-bottom: 0.5rem;
+    }
+    .login-subtitle {
+        color: #6b7280;
+    }
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    .form-label {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #374151;
+        margin-bottom: 0.25rem;
+    }
+    .form-input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        box-sizing: border-box;
+    }
+    .form-input:focus {
+        outline: none;
+        border-color: #10b981;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    }
+    .login-button {
+        width: 100%;
+        background-color: #10b981;
+        color: white;
+        font-weight: bold;
+        padding: 0.75rem;
+        border: none;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+    .login-button:hover {
+        background-color: #059669;
+    }
+    .login-footer {
+        margin-top: 1.5rem;
+        text-align: center;
+    }
+    .login-footer p {
+        color: #6b7280;
+        margin: 0;
+    }
+    .login-footer a {
+        color: #10b981;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    .login-footer a:hover {
+        color: #047857;
+    }
+    .back-link {
+        text-align: center;
+        margin-top: 1.5rem;
+    }
+    .back-link a {
+        color: #10b981;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .back-link a:hover {
+        color: #047857;
+    }
+    .test-users {
+        margin-top: 2rem;
+        background-color: #f9fafb;
+        border-radius: 8px;
+        padding: 1rem;
+        border: 1px solid #e5e7eb;
+    }
+    .test-users h3 {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #374151;
+        margin: 0 0 0.5rem 0;
+    }
+    .test-users-list {
+        font-size: 0.75rem;
+        color: #6b7280;
+        line-height: 1.4;
+    }
+    .test-users-list p {
+        margin: 0.25rem 0;
+    }
+</style>
+
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-header">
+            <h1 class="login-title">Iniciar Sesión</h1>
+            <p class="login-subtitle">Accede a tu cuenta del sistema Montanel</p>
+        </div>
+
+        <form method="POST">
+            <div class="form-group">
+                <label for="email" class="form-label">Correo Electrónico</label>
+                <input type="email" 
+                       id="email" 
+                       name="email" 
+                       required 
+                       class="form-input"
+                       placeholder="tu-email@empresa.com">
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" 
+                       id="password" 
+                       name="password" 
+                       required 
+                       class="form-input"
+                       placeholder="••••••••">
+            </div>
+
+            <button type="submit" class="login-button">
+                <i class="fas fa-sign-in-alt"></i>
+                Iniciar Sesión
+            </button>
+        </form>
+
+        <div class="login-footer">
+            <p>
+                ¿No tienes cuenta?
+                <a href="{{ url_for('register') }}">Regístrate aquí</a>
+            </p>
+        </div>
+
+        <!-- Usuarios de Prueba (solo en desarrollo) -->
+        <div class="test-users">
+            <h3>Credenciales de Prueba:</h3>
+            <div class="test-users-list">
+                <p><strong>Administrador:</strong> admin@montanel.com / admin123</p>
+                <p><strong>Nuevo Usuario:</strong> Usa el botón "Regístrate" para crear cuenta</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="back-link">
+        <a href="{{ url_for('index') }}">
+            <i class="fas fa-arrow-left"></i>
+            Volver al inicio
+        </a>
+    </div>
+</div>
+{% endblock %}

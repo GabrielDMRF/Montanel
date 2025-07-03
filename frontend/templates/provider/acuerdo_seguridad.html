@@ -1,0 +1,494 @@
+<!-- frontend/templates/provider/forms/acuerdo_seguridad.html -->
+{% extends "base.html" %}
+
+{% block title %}Acuerdo de Seguridad - Sistema Montanel{% endblock %}
+
+{% block content %}
+<style>
+    .form-container {
+        max-width: 48rem;
+        margin: 0 auto;
+    }
+    .form-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        border: 1px solid #e5e7eb;
+        overflow: hidden;
+    }
+    .form-header {
+        background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+        color: white;
+        padding: 2rem;
+        text-align: center;
+    }
+    .form-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+    .form-subtitle {
+        opacity: 0.9;
+        font-size: 0.875rem;
+    }
+    .form-content {
+        padding: 2rem;
+    }
+    .form-section {
+        margin-bottom: 2rem;
+    }
+    .section-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #e5e7eb;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    .form-label {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #374151;
+        margin-bottom: 0.5rem;
+    }
+    .required {
+        color: #dc2626;
+    }
+    .form-input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 0.875rem;
+        transition: all 0.2s ease;
+        box-sizing: border-box;
+    }
+    .form-input:focus {
+        outline: none;
+        border-color: #10b981;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    }
+    .form-input:invalid {
+        border-color: #f87171;
+    }
+    .help-text {
+        font-size: 0.75rem;
+        color: #6b7280;
+        margin-top: 0.25rem;
+    }
+    .info-box {
+        background-color: #eff6ff;
+        border: 1px solid #bfdbfe;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    .info-title {
+        font-weight: 600;
+        color: #1e40af;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .info-text {
+        color: #3730a3;
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+    .action-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: space-between;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid #e5e7eb;
+    }
+    .btn {
+        padding: 0.875rem 2rem;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+    }
+    .btn-primary {
+        background-color: #10b981;
+        color: white;
+    }
+    .btn-primary:hover {
+        background-color: #047857;
+        transform: translateY(-1px);
+    }
+    .btn-secondary {
+        background-color: #f3f4f6;
+        color: #374151;
+        border: 1px solid #d1d5db;
+    }
+    .btn-secondary:hover {
+        background-color: #e5e7eb;
+    }
+    .btn-outline {
+        background-color: transparent;
+        color: #10b981;
+        border: 1px solid #10b981;
+    }
+    .btn-outline:hover {
+        background-color: #10b981;
+        color: white;
+    }
+    @media (max-width: 640px) {
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+        .form-container {
+            margin: 1rem;
+        }
+        .form-content {
+            padding: 1.5rem;
+        }
+        .action-buttons {
+            flex-direction: column-reverse;
+        }
+    }
+</style>
+
+<div class="form-container">
+    <div class="form-card">
+        <!-- Header -->
+        <div class="form-header">
+            <h1 class="form-title">
+                <i class="fas fa-shield-alt"></i>
+                Acuerdo de Seguridad Proveedores
+            </h1>
+            <p class="form-subtitle">
+                Complete la información para generar el documento oficial
+            </p>
+        </div>
+
+        <!-- Contenido -->
+        <div class="form-content">
+            <!-- Información importante -->
+            <div class="info-box">
+                <div class="info-title">
+                    <i class="fas fa-info-circle"></i>
+                    Información Importante
+                </div>
+                <div class="info-text">
+                    Este formulario generará automáticamente el documento oficial de "Acuerdo de Seguridad Proveedores" 
+                    con los compromisos y requisitos establecidos por Inversiones Montanel SAS. 
+                    Asegúrese de completar todos los campos correctamente.
+                </div>
+            </div>
+
+            <form method="POST" id="acuerdoForm">
+                <!-- Información de la Empresa -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-building"></i>
+                        Información de la Empresa
+                    </h3>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="razon_social" class="form-label">
+                                Razón Social <span class="required">*</span>
+                            </label>
+                            <input type="text" 
+                                   id="razon_social" 
+                                   name="razon_social" 
+                                   required 
+                                   class="form-input"
+                                   value="{{ form_data.razon_social if form_data else '' }}"
+                                   placeholder="Nombre completo de la empresa">
+                            <div class="help-text">Nombre oficial registrado en Cámara de Comercio</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nit" class="form-label">
+                                NIT <span class="required">*</span>
+                            </label>
+                            <input type="text" 
+                                   id="nit" 
+                                   name="nit" 
+                                   required 
+                                   pattern="[0-9]{9}-[0-9]"
+                                   class="form-input"
+                                   value="{{ form_data.nit if form_data else '' }}"
+                                   placeholder="123456789-0">
+                            <div class="help-text">Formato: 123456789-0</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="representante_legal" class="form-label">
+                            Representante Legal <span class="required">*</span>
+                        </label>
+                        <input type="text" 
+                               id="representante_legal" 
+                               name="representante_legal" 
+                               required 
+                               class="form-input"
+                               value="{{ form_data.representante_legal if form_data else '' }}"
+                               placeholder="Nombre completo del representante legal">
+                        <div class="help-text">Persona autorizada para firmar en nombre de la empresa</div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cedula_representante" class="form-label">
+                                Cédula del Representante
+                            </label>
+                            <input type="text" 
+                                   id="cedula_representante" 
+                                   name="cedula_representante" 
+                                   class="form-input"
+                                   value="{{ form_data.cedula_representante if form_data else '' }}"
+                                   placeholder="12345678">
+                            <div class="help-text">Número de identificación</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="form-label">
+                                Email de Contacto
+                            </label>
+                            <input type="email" 
+                                   id="email" 
+                                   name="email" 
+                                   class="form-input"
+                                   value="{{ form_data.email if form_data else '' }}"
+                                   placeholder="contacto@empresa.com">
+                            <div class="help-text">Correo electrónico principal</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Información de Contacto -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Información de Contacto
+                    </h3>
+
+                    <div class="form-group">
+                        <label for="direccion" class="form-label">
+                            Dirección <span class="required">*</span>
+                        </label>
+                        <input type="text" 
+                               id="direccion" 
+                               name="direccion" 
+                               required 
+                               class="form-input"
+                               value="{{ form_data.direccion if form_data else '' }}"
+                               placeholder="Dirección completa de la empresa">
+                        <div class="help-text">Dirección física donde opera la empresa</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefono" class="form-label">
+                            Teléfono <span class="required">*</span>
+                        </label>
+                        <input type="tel" 
+                               id="telefono" 
+                               name="telefono" 
+                               required 
+                               class="form-input"
+                               value="{{ form_data.telefono if form_data else '' }}"
+                               placeholder="(601) 123-4567">
+                        <div class="help-text">Número de contacto principal</div>
+                    </div>
+                </div>
+
+                <!-- Compromisos del Acuerdo -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-file-contract"></i>
+                        Compromisos del Acuerdo
+                    </h3>
+                    
+                    <div class="info-box">
+                        <div class="info-title">
+                            <i class="fas fa-clipboard-list"></i>
+                            Al generar este documento, su empresa se compromete a:
+                        </div>
+                        <div class="info-text">
+                            <ul style="margin: 0.5rem 0; padding-left: 1.5rem; line-height: 1.6;">
+                                <li>Garantizar que el origen de los fondos no involucra actividades ilícitas</li>
+                                <li>Proteger de manera confidencial toda la información suministrada</li>
+                                <li>Mantener la integridad de la carga con controles de seguridad</li>
+                                <li>Reportar eventos sospechosos a los responsables de seguridad</li>
+                                <li>Cumplir con la legislación nacional laboral, social y ambiental</li>
+                                <li>Suministrar documentos y certificaciones legales solicitados</li>
+                                <li>Mantener confidencialidad en los acuerdos comerciales</li>
+                                <li>Actualizar información comercial anualmente</li>
+                                <li>Ser amigables con el medio ambiente y socialmente responsables</li>
+                                <li>Capacitar al personal en temas de seguridad</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones de Acción -->
+                <div class="action-buttons">
+                    <div>
+                        <a href="{{ url_for('provider_dashboard') }}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i>
+                            Volver al Dashboard
+                        </a>
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem;">
+                        <button type="button" id="previewBtn" class="btn btn-outline">
+                            <i class="fas fa-eye"></i>
+                            Vista Previa
+                        </button>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-file-download"></i>
+                            Generar Documento
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Vista Previa -->
+<div id="previewModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+    <div style="background: white; border-radius: 12px; max-width: 600px; max-height: 80vh; overflow-y: auto; margin: 2rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
+        <div style="padding: 1.5rem; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="margin: 0; font-size: 1.25rem; font-weight: 600;">Vista Previa del Documento</h3>
+            <button id="closeModal" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #6b7280;">×</button>
+        </div>
+        <div id="previewContent" style="padding: 1.5rem;">
+            <!-- El contenido se cargará dinámicamente -->
+        </div>
+        <div style="padding: 1.5rem; border-top: 1px solid #e5e7eb; text-align: right;">
+            <button id="closePreview" class="btn btn-secondary">Cerrar</button>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('acuerdoForm');
+    const previewBtn = document.getElementById('previewBtn');
+    const modal = document.getElementById('previewModal');
+    const closeModal = document.getElementById('closeModal');
+    const closePreview = document.getElementById('closePreview');
+    const previewContent = document.getElementById('previewContent');
+
+    // Validación en tiempo real
+    const inputs = form.querySelectorAll('input[required]');
+    inputs.forEach(input => {
+        input.addEventListener('blur', function() {
+            if (!this.value.trim()) {
+                this.style.borderColor = '#f87171';
+            } else {
+                this.style.borderColor = '#10b981';
+            }
+        });
+    });
+
+    // Vista previa
+    previewBtn.addEventListener('click', function() {
+        const formData = new FormData(form);
+        let previewHTML = `
+            <div style="font-family: Arial, sans-serif; line-height: 1.6;">
+                <h2 style="text-align: center; color: #10b981; margin-bottom: 2rem;">
+                    ACUERDO DE SEGURIDAD PROVEEDORES
+                </h2>
+                
+                <p><strong>Estimado Asociado de Negocio:</strong> ${formData.get('razon_social') || '[RAZÓN SOCIAL]'}</p>
+                
+                <p style="margin: 1.5rem 0;">
+                    Con el objetivo de fortalecer las relaciones y garantizar el cumplimiento de los requisitos 
+                    de seguridad, ambientales y sociales requeridos por la compañía, queremos recordarle los siguientes puntos:
+                </p>
+                
+                <div style="background: #f9fafb; padding: 1.5rem; border-radius: 8px; margin: 1.5rem 0;">
+                    <h3 style="color: #374151; margin-bottom: 1rem;">Información del Proveedor:</h3>
+                    <p><strong>Razón Social:</strong> ${formData.get('razon_social') || '[PENDIENTE]'}</p>
+                    <p><strong>NIT:</strong> ${formData.get('nit') || '[PENDIENTE]'}</p>
+                    <p><strong>Representante Legal:</strong> ${formData.get('representante_legal') || '[PENDIENTE]'}</p>
+                    <p><strong>Dirección:</strong> ${formData.get('direccion') || '[PENDIENTE]'}</p>
+                    <p><strong>Teléfono:</strong> ${formData.get('telefono') || '[PENDIENTE]'}</p>
+                </div>
+                
+                <p style="font-size: 0.875rem; color: #6b7280; font-style: italic;">
+                    * Este es solo una vista previa. El documento final incluirá todos los puntos del acuerdo 
+                    y las firmas correspondientes.
+                </p>
+            </div>
+        `;
+        
+        previewContent.innerHTML = previewHTML;
+        modal.style.display = 'flex';
+    });
+
+    // Cerrar modal
+    [closeModal, closePreview].forEach(btn => {
+        btn.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+    });
+
+    // Cerrar modal al hacer clic fuera
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    // Validación antes de enviar
+    form.addEventListener('submit', function(e) {
+        const requiredInputs = form.querySelectorAll('input[required]');
+        let isValid = true;
+        
+        requiredInputs.forEach(input => {
+            if (!input.value.trim()) {
+                input.style.borderColor = '#f87171';
+                isValid = false;
+            }
+        });
+        
+        if (!isValid) {
+            e.preventDefault();
+            alert('Por favor complete todos los campos requeridos (marcados con *)');
+            return false;
+        }
+        
+        // Mostrar indicador de carga
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generando...';
+        submitBtn.disabled = true;
+        
+        // Restaurar botón después de un tiempo (por si hay error)
+        setTimeout(() => {
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        }, 10000);
+    });
+});
+</script>
+{% endblock %}
